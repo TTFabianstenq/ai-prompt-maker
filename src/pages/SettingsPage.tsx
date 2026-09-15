@@ -47,17 +47,17 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 p-6">
-      <div>
+    <div className="mx-auto max-w-3xl space-y-4 p-3 sm:space-y-6 sm:p-6">
+      <div className="hidden md:block">
         <h2 className="text-2xl font-semibold tracking-tight">Settings</h2>
         <p className="text-sm text-muted-foreground">Configure defaults and API options.</p>
       </div>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-base">Appearance</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Theme</label>
             <Select
@@ -73,11 +73,11 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
       </Card>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-base">Default Prompt Options</CardTitle>
           <CardDescription>Used when you open the Generator</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid gap-4 p-4 pt-0 sm:grid-cols-2 sm:p-6 sm:pt-0">
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Default Target AI</label>
             <Select
@@ -137,22 +137,22 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
       </Card>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <div className="flex items-center gap-2">
             <Key className="h-4 w-4" />
             <CardTitle className="text-base">AI Provider (Optional)</CardTitle>
           </div>
           <CardDescription>
-            Leave as "none" to use high-quality Demo Mode (recommended). Live API calls are prepared but not yet active in this version.
+            Leave as "none" for Demo Mode. Live API calls are not active in this version yet.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
           <div className="rounded-lg border border-border bg-muted/30 p-3 text-sm text-muted-foreground">
             <div className="mb-1 flex items-center gap-2 font-medium text-foreground">
               <Shield className="h-4 w-4" />
               Security note
             </div>
-            API keys are stored only in your browser’s localStorage. They never leave your device in this app. Do not share your screen while the key is visible.
+            API keys stay in your browser only. Never share your screen with the key visible.
           </div>
 
           <div className="space-y-1.5">
@@ -174,7 +174,7 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
             <>
               <div className="space-y-1.5">
                 <label className="text-sm font-medium">API Key</label>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   <Input
                     type={showKey ? 'text' : 'password'}
                     value={settings.aiConfig.apiKey}
@@ -182,7 +182,7 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
                     placeholder="sk-... or equivalent"
                     className="font-mono text-sm"
                   />
-                  <Button variant="outline" onClick={() => setShowKey(!showKey)}>
+                  <Button variant="outline" onClick={() => setShowKey(!showKey)} className="sm:w-auto">
                     {showKey ? 'Hide' : 'Show'}
                   </Button>
                 </div>
@@ -192,10 +192,10 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
                 <Input
                   value={settings.aiConfig.model}
                   onChange={(e) => updateAI('model', e.target.value)}
-                  placeholder="e.g. grok-2, gpt-4o, claude-3-5-sonnet..."
+                  placeholder="e.g. grok-2, gpt-4o..."
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <label className="text-sm font-medium">Temperature</label>
                   <Input
@@ -234,13 +234,13 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
       </Card>
 
       <Card className="border-destructive/40">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-destructive" />
             <CardTitle className="text-base">Danger Zone</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-medium">Clear all saved prompts</p>
@@ -262,7 +262,7 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-medium">Reset settings</p>
-              <p className="text-xs text-muted-foreground">Restore default configuration (prompts are kept).</p>
+              <p className="text-xs text-muted-foreground">Restore defaults (prompts are kept).</p>
             </div>
             <Button variant="outline" size="sm" onClick={handleReset}>
               <RotateCcw className="h-3.5 w-3.5" />
