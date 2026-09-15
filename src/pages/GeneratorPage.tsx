@@ -4,7 +4,6 @@ import {
   Sparkles,
   Copy,
   RefreshCw,
-  Wand2,
   Minimize2,
   Maximize2,
   Wrench,
@@ -174,7 +173,6 @@ export function GeneratorPage({ settings }: Props) {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6 p-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Prompt Generator</h2>
@@ -188,7 +186,6 @@ export function GeneratorPage({ settings }: Props) {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-5">
-        {/* Left: Input & Options */}
         <div className="space-y-5 lg:col-span-2">
           <Card>
             <CardHeader className="pb-3">
@@ -329,7 +326,6 @@ export function GeneratorPage({ settings }: Props) {
           </Card>
         </div>
 
-        {/* Right: Output */}
         <div className="space-y-4 lg:col-span-3">
           <Card className="flex h-full flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
@@ -353,7 +349,6 @@ export function GeneratorPage({ settings }: Props) {
                 className="min-h-[380px] flex-1 font-mono text-sm leading-relaxed"
               />
 
-              {/* Action bar */}
               <div className="flex flex-wrap gap-2">
                 <Button variant="secondary" size="sm" onClick={() => handleAction('shorter')} disabled={!generatedPrompt}>
                   <Minimize2 className="h-3.5 w-3.5" />
@@ -375,15 +370,12 @@ export function GeneratorPage({ settings }: Props) {
                   <Save className="h-3.5 w-3.5" />
                   Save
                 </Button>
-                <div className="relative">
-                  <Button variant="secondary" size="sm" disabled={!generatedPrompt} onClick={() => handleExport(settings.exportFormat)}>
-                    <Download className="h-3.5 w-3.5" />
-                    Export
-                  </Button>
-                </div>
+                <Button variant="secondary" size="sm" disabled={!generatedPrompt} onClick={() => handleExport(settings.exportFormat)}>
+                  <Download className="h-3.5 w-3.5" />
+                  Export
+                </Button>
               </div>
 
-              {/* Quick export options */}
               {generatedPrompt && (
                 <div className="flex gap-2 text-xs text-muted-foreground">
                   <button onClick={() => handleExport('txt')} className="hover:text-foreground">TXT</button>
@@ -398,7 +390,6 @@ export function GeneratorPage({ settings }: Props) {
         </div>
       </div>
 
-      {/* Save dialog */}
       <AnimatePresence>
         {showSaveDialog && (
           <motion.div
