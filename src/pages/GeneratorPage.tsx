@@ -172,8 +172,9 @@ export function GeneratorPage({ settings }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto max-w-6xl space-y-4 p-3 sm:space-y-6 sm:p-6">
+      {/* Desktop-only header; mobile uses top bar */}
+      <div className="hidden items-center justify-between md:flex">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Prompt Generator</h2>
           <p className="text-sm text-muted-foreground">
@@ -185,21 +186,27 @@ export function GeneratorPage({ settings }: Props) {
         )}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-5">
-        <div className="space-y-5 lg:col-span-2">
+      {usedDemoMode && generatedPrompt && (
+        <div className="md:hidden">
+          <Badge variant="secondary">Demo Mode</Badge>
+        </div>
+      )}
+
+      <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
+        <div className="space-y-4 lg:col-span-2">
           <Card>
-            <CardHeader className="pb-3">
+            <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
               <CardTitle className="text-base">What do you want the AI to do?</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3 p-4 pt-0 sm:space-y-4 sm:p-6 sm:pt-0">
               <Textarea
                 placeholder="e.g. Make me a Minecraft Discord moderation bot in Python..."
                 value={config.idea}
                 onChange={(e) => updateConfig('idea', e.target.value)}
-                className="min-h-[140px] text-sm"
+                className="min-h-[100px] text-sm sm:min-h-[140px]"
               />
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <label className="text-xs font-medium text-muted-foreground">Target AI</label>
                   <Select
@@ -274,14 +281,14 @@ export function GeneratorPage({ settings }: Props) {
                   placeholder="Any extra constraints or must-haves..."
                   value={config.additionalRequirements}
                   onChange={(e) => updateConfig('additionalRequirements', e.target.value)}
-                  className="min-h-[70px] text-sm"
+                  className="min-h-[60px] text-sm"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-muted-foreground">Output Format (optional)</label>
                 <Input
-                  placeholder="e.g. Markdown with code blocks, JSON, step-by-step list..."
+                  placeholder="Markdown, JSON, step-by-step list..."
                   value={config.outputFormat}
                   onChange={(e) => updateConfig('outputFormat', e.target.value)}
                 />
@@ -327,8 +334,8 @@ export function GeneratorPage({ settings }: Props) {
         </div>
 
         <div className="space-y-4 lg:col-span-3">
-          <Card className="flex h-full flex-col">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+          <Card className="flex flex-col">
+            <CardHeader className="flex flex-col gap-2 space-y-0 p-4 pb-2 sm:flex-row sm:items-center sm:justify-between sm:p-6 sm:pb-3">
               <CardTitle className="text-base">Generated Prompt</CardTitle>
               <div className="flex flex-wrap gap-1.5">
                 <Button variant="outline" size="sm" onClick={handleCopy} disabled={!generatedPrompt}>
@@ -337,52 +344,52 @@ export function GeneratorPage({ settings }: Props) {
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => handleAction('regenerate')} disabled={isGenerating}>
                   <RefreshCw className="h-3.5 w-3.5" />
-                  Regenerate
+                  <span className="hidden sm:inline">Regenerate</span>
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="flex flex-1 flex-col gap-3">
+            <CardContent className="flex flex-1 flex-col gap-3 p-4 pt-0 sm:p-6 sm:pt-0">
               <Textarea
                 value={generatedPrompt}
                 onChange={(e) => setGeneratedPrompt(e.target.value)}
                 placeholder="Your optimized prompt will appear here..."
-                className="min-h-[380px] flex-1 font-mono text-sm leading-relaxed"
+                className="min-h-[220px] flex-1 font-mono text-sm leading-relaxed sm:min-h-[380px]"
               />
 
               <div className="flex flex-wrap gap-2">
                 <Button variant="secondary" size="sm" onClick={() => handleAction('shorter')} disabled={!generatedPrompt}>
                   <Minimize2 className="h-3.5 w-3.5" />
-                  Make shorter
+                  <span className="hidden xs:inline sm:inline">Shorter</span>
                 </Button>
                 <Button variant="secondary" size="sm" onClick={() => handleAction('detailed')} disabled={!generatedPrompt}>
                   <Maximize2 className="h-3.5 w-3.5" />
-                  More detailed
+                  <span className="hidden sm:inline">Detailed</span>
                 </Button>
                 <Button variant="secondary" size="sm" onClick={() => handleAction('fix')} disabled={!generatedPrompt}>
                   <Wrench className="h-3.5 w-3.5" />
-                  Fix prompt
+                  <span className="hidden sm:inline">Fix</span>
                 </Button>
                 <Button variant="secondary" size="sm" onClick={handleExplain} disabled={!generatedPrompt}>
                   <HelpCircle className="h-3.5 w-3.5" />
-                  Explain
+                  <span className="hidden sm:inline">Explain</span>
                 </Button>
                 <Button variant="secondary" size="sm" onClick={handleSave} disabled={!generatedPrompt}>
                   <Save className="h-3.5 w-3.5" />
-                  Save
+                  <span className="hidden sm:inline">Save</span>
                 </Button>
                 <Button variant="secondary" size="sm" disabled={!generatedPrompt} onClick={() => handleExport(settings.exportFormat)}>
                   <Download className="h-3.5 w-3.5" />
-                  Export
+                  <span className="hidden sm:inline">Export</span>
                 </Button>
               </div>
 
               {generatedPrompt && (
                 <div className="flex gap-2 text-xs text-muted-foreground">
-                  <button onClick={() => handleExport('txt')} className="hover:text-foreground">TXT</button>
+                  <button type="button" onClick={() => handleExport('txt')} className="min-h-0 py-1 hover:text-foreground">TXT</button>
                   <span>·</span>
-                  <button onClick={() => handleExport('md')} className="hover:text-foreground">Markdown</button>
+                  <button type="button" onClick={() => handleExport('md')} className="min-h-0 py-1 hover:text-foreground">Markdown</button>
                   <span>·</span>
-                  <button onClick={() => handleExport('json')} className="hover:text-foreground">JSON</button>
+                  <button type="button" onClick={() => handleExport('json')} className="min-h-0 py-1 hover:text-foreground">JSON</button>
                 </div>
               )}
             </CardContent>
@@ -396,15 +403,15 @@ export function GeneratorPage({ settings }: Props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-4"
             onClick={() => setShowSaveDialog(false)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 40, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl"
+              className="w-full max-w-md rounded-t-2xl border border-border bg-card p-5 shadow-xl sm:rounded-xl sm:p-6"
             >
               <h3 className="mb-4 text-lg font-semibold">Save Prompt</h3>
               <Input
