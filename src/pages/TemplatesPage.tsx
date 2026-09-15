@@ -51,8 +51,8 @@ export function TemplatesPage({ onNavigate }: Props) {
   const categories = Array.from(new Set(PROMPT_TEMPLATES.map((t) => t.category)));
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
-      <div>
+    <div className="mx-auto max-w-6xl space-y-4 p-3 sm:space-y-6 sm:p-6">
+      <div className="hidden md:block">
         <h2 className="text-2xl font-semibold tracking-tight">Templates</h2>
         <p className="text-sm text-muted-foreground">
           Start from a proven template and customize it.
@@ -60,7 +60,7 @@ export function TemplatesPage({ onNavigate }: Props) {
       </div>
 
       {!selected ? (
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {categories.map((cat) => (
             <div key={cat}>
               <h3 className="mb-3 text-sm font-medium text-muted-foreground">{cat}</h3>
@@ -68,17 +68,17 @@ export function TemplatesPage({ onNavigate }: Props) {
                 {PROMPT_TEMPLATES.filter((t) => t.category === cat).map((tpl) => (
                   <Card
                     key={tpl.id}
-                    className="cursor-pointer transition-colors hover:border-primary/50"
+                    className="cursor-pointer transition-colors hover:border-primary/50 active:scale-[0.99]"
                     onClick={() => handleSelect(tpl)}
                   >
-                    <CardHeader className="pb-2">
+                    <CardHeader className="p-4 pb-2">
                       <div className="flex items-center gap-2">
-                        <LayoutTemplate className="h-4 w-4 text-primary" />
+                        <LayoutTemplate className="h-4 w-4 shrink-0 text-primary" />
                         <CardTitle className="text-base">{tpl.name}</CardTitle>
                       </div>
                       <CardDescription className="text-xs">{tpl.description}</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="p-4 pt-0">
                       <Badge variant="secondary">{tpl.category}</Badge>
                     </CardContent>
                   </Card>
@@ -88,17 +88,17 @@ export function TemplatesPage({ onNavigate }: Props) {
           ))}
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <Button variant="ghost" size="sm" onClick={() => setSelected(null)}>
             ← Back to templates
           </Button>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="p-4 sm:p-6">
               <CardTitle>{selected.name}</CardTitle>
               <CardDescription>{selected.description}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
               {selected.placeholders.map((ph) => (
                 <div key={ph} className="space-y-1.5">
                   <label className="text-sm font-medium capitalize">{ph.replace(/_/g, ' ')}</label>
@@ -120,9 +120,9 @@ export function TemplatesPage({ onNavigate }: Props) {
 
           {finalPrompt && (
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0">
+              <CardHeader className="flex flex-col gap-2 space-y-0 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <CardTitle className="text-base">Final Prompt</CardTitle>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" onClick={handleCopy}>
                     {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                     {copied ? 'Copied!' : 'Copy'}
@@ -136,11 +136,11 @@ export function TemplatesPage({ onNavigate }: Props) {
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
                 <Textarea
                   value={finalPrompt}
                   onChange={(e) => setFinalPrompt(e.target.value)}
-                  className="min-h-[280px] font-mono text-sm"
+                  className="min-h-[200px] font-mono text-sm sm:min-h-[280px]"
                 />
               </CardContent>
             </Card>
