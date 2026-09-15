@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Settings, Trash2, RotateCcw, AlertTriangle, Key, Shield } from 'lucide-react';
+import { Trash2, RotateCcw, AlertTriangle, Key, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
@@ -37,7 +37,6 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
   const handleClearPrompts = () => {
     clearAllPrompts();
     setConfirmClear(false);
-    // Force a soft refresh of library by reloading would be ideal, but user can navigate
     alert('All saved prompts have been cleared.');
   };
 
@@ -54,7 +53,6 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
         <p className="text-sm text-muted-foreground">Configure defaults and API options.</p>
       </div>
 
-      {/* Appearance */}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Appearance</CardTitle>
@@ -74,7 +72,6 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
         </CardContent>
       </Card>
 
-      {/* Defaults */}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Default Prompt Options</CardTitle>
@@ -139,7 +136,6 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
         </CardContent>
       </Card>
 
-      {/* API Configuration */}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -237,7 +233,6 @@ export function SettingsPage({ settings, onSettingsChange }: Props) {
         </CardContent>
       </Card>
 
-      {/* Danger zone */}
       <Card className="border-destructive/40">
         <CardHeader>
           <div className="flex items-center gap-2">
