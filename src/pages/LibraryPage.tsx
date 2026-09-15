@@ -9,7 +9,6 @@ import {
   Download,
   Check,
   Plus,
-  Filter,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -49,7 +48,6 @@ export function LibraryPage({ settings }: Props) {
   const [editing, setEditing] = useState<SavedPrompt | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // Persist whenever prompts change
   useEffect(() => {
     savePrompts(prompts);
   }, [prompts]);
@@ -78,7 +76,7 @@ export function LibraryPage({ settings }: Props) {
         return b.updatedAt - a.updatedAt;
       }
       if (sort === 'name') return a.title.localeCompare(b.title);
-      return b.createdAt - a.createdAt; // newest
+      return b.createdAt - a.createdAt;
     });
 
     return list;
@@ -140,7 +138,6 @@ export function LibraryPage({ settings }: Props) {
         </div>
       </div>
 
-      {/* Filters */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -163,7 +160,6 @@ export function LibraryPage({ settings }: Props) {
         </Select>
       </div>
 
-      {/* List */}
       {filtered.length === 0 ? (
         <Card className="py-16 text-center">
           <CardContent>
@@ -231,7 +227,6 @@ export function LibraryPage({ settings }: Props) {
         </div>
       )}
 
-      {/* Edit modal */}
       {editing && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
