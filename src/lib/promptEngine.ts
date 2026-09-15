@@ -1,4 +1,4 @@
-import type { PromptConfig, OutputLength, Tone, TechnicalLevel, CreativityLevel, PromptType } from '@/types';
+import type { PromptConfig, OutputLength, Tone, TechnicalLevel, PromptType } from '@/types';
 
 /**
  * High-quality local prompt generation engine.
@@ -34,7 +34,7 @@ export function generateLocalPrompt(config: PromptConfig): string {
   sections.push(buildOutputFormat(config));
 
   // Quality & Verification
-  sections.push(buildQuality(config));
+  sections.push(buildQuality());
 
   // Clarifying questions (optional)
   if (config.askClarifyingQuestions) {
@@ -211,7 +211,7 @@ function lengthGuidance(length: OutputLength): string {
   return map[length];
 }
 
-function buildQuality(config: PromptConfig): string {
+function buildQuality(): string {
   return `## Quality Criteria\n- Accuracy and correctness are the highest priority.\n- Clarity of instructions and structure.\n- Relevance to the original request.\n- No filler or unnecessary repetition.\n- The final output should be immediately usable.`;
 }
 
