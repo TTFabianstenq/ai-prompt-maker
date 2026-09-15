@@ -13,13 +13,13 @@ interface Props {
 }
 
 const IMPROVE_ACTIONS = [
-  { id: 'improve', label: 'Improve Prompt', instruction: 'Improve this prompt for clarity, structure and reliability.' },
-  { id: 'precise', label: 'Make More Precise', instruction: 'Make this prompt more precise and specific.' },
-  { id: 'professional', label: 'Make More Professional', instruction: 'Make this prompt more professional.' },
-  { id: 'remove', label: 'Remove Unnecessary', instruction: 'Remove unnecessary instructions and filler.' },
-  { id: 'details', label: 'Add Missing Details', instruction: 'Add missing details and strengthen the prompt.' },
-  { id: 'beginner', label: 'Make Beginner-Friendly', instruction: 'Make this prompt beginner-friendly.' },
-  { id: 'reliable', label: 'Follow Instructions Reliably', instruction: 'Make the AI follow instructions more reliably.' },
+  { id: 'improve', label: 'Improve', instruction: 'Improve this prompt for clarity, structure and reliability.' },
+  { id: 'precise', label: 'More Precise', instruction: 'Make this prompt more precise and specific.' },
+  { id: 'professional', label: 'Professional', instruction: 'Make this prompt more professional.' },
+  { id: 'remove', label: 'Remove fluff', instruction: 'Remove unnecessary instructions and filler.' },
+  { id: 'details', label: 'Add details', instruction: 'Add missing details and strengthen the prompt.' },
+  { id: 'beginner', label: 'Beginner', instruction: 'Make this prompt beginner-friendly.' },
+  { id: 'reliable', label: 'More reliable', instruction: 'Make the AI follow instructions more reliably.' },
 ] as const;
 
 export function ImproverPage({ settings }: Props) {
@@ -64,19 +64,20 @@ export function ImproverPage({ settings }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
-      <div className="flex items-center justify-between">
+    <div className="mx-auto max-w-6xl space-y-4 p-3 sm:space-y-6 sm:p-6">
+      <div className="hidden items-center justify-between md:flex">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Prompt Improver</h2>
-          <p className="text-sm text-muted-foreground">
-            Paste any existing prompt and strengthen it.
-          </p>
+          <p className="text-sm text-muted-foreground">Paste any existing prompt and strengthen it.</p>
         </div>
         {usedDemo && improved && <Badge variant="secondary">Demo Mode</Badge>}
       </div>
 
-      {/* Action buttons */}
-      <div className="flex flex-wrap gap-2">
+      {usedDemo && improved && (
+        <div className="md:hidden"><Badge variant="secondary">Demo Mode</Badge></div>
+      )}
+
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         {IMPROVE_ACTIONS.map((action) => (
           <Button
             key={action.id}
@@ -84,6 +85,7 @@ export function ImproverPage({ settings }: Props) {
             size="sm"
             disabled={isWorking || !original.trim()}
             onClick={() => runAction(action.instruction)}
+            className="shrink-0"
           >
             {isWorking ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
             {action.label}
@@ -98,39 +100,39 @@ export function ImproverPage({ settings }: Props) {
         </div>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-3">
             <CardTitle className="text-base">Original Prompt</CardTitle>
             <CardDescription>Paste the prompt you want to improve</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
             <Textarea
               value={original}
               onChange={(e) => setOriginal(e.target.value)}
               placeholder="Paste your existing prompt here..."
-              className="min-h-[420px] font-mono text-sm"
+              className="min-h-[200px] font-mono text-sm sm:min-h-[420px]"
             />
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+          <CardHeader className="flex flex-col gap-2 space-y-0 p-4 pb-2 sm:flex-row sm:items-center sm:justify-between sm:p-6 sm:pb-3">
             <div>
               <CardTitle className="text-base">Improved Prompt</CardTitle>
               <CardDescription>Result after applying improvements</CardDescription>
             </div>
-            <Button variant="outline" size="sm" onClick={handleCopy} disabled={!improved}>
+            <Button variant="outline" size="sm" onClick={handleCopy} disabled={!improved} className="self-start">
               {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
               {copied ? 'Copied!' : 'Copy'}
             </Button>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
             <Textarea
               value={improved}
               onChange={(e) => setImproved(e.target.value)}
               placeholder="Improved version will appear here..."
-              className="min-h-[420px] font-mono text-sm"
+              className="min-h-[200px] font-mono text-sm sm:min-h-[420px]"
             />
           </CardContent>
         </Card>
