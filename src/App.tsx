@@ -16,7 +16,7 @@ export default function App() {
     if (s.theme === 'system') {
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-    return s.theme;
+    return s.theme === 'light' ? 'light' : 'dark';
   });
 
   // Apply theme class
@@ -30,9 +30,9 @@ export default function App() {
   }, [theme]);
 
   const handleToggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
+    const next: 'dark' | 'light' = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
-    const nextSettings = { ...settings, theme: next };
+    const nextSettings: AppSettings = { ...settings, theme: next };
     setSettings(nextSettings);
     saveSettings(nextSettings);
   };
